@@ -1,0 +1,63 @@
+﻿@page "/add-employee"
+
+@using EmployeeWeb.Entities
+@using EmployeeWeb.Services
+
+@inject IEmployeeService EmployeeService;
+
+<EditForm Model="@_employee" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <div class="row">
+        <div class="form-group col-md-12 mb-3">
+            <label for="name" class="mb-2">Name</label>
+            <InputText class="form-control mb-2" id="name" placeholder="John Doe" @bind-Value="@_employee.Name" />
+            <small id="emailHelp" class="form-text text-muted">Enter the full name of the employee</small>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-3 mb-3">
+            <label for="working-hours" class="mb-2">Worked hours</label>
+            <InputNumber class="form-control" id="working-hours" placeholder="120" @bind-Value="@_employee.HoursPerMonth" />
+        </div>
+        <div class="form-check col-md-3 mb-3">
+            <label class="form-check-label mb-2" for="hourly-wage">Hourly wage</label>
+            <InputNumber class="form-control" id="hourly-wage" placeholder="200" @bind-Value="@_employee.HourlyWage" />
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="submit" class="btn btn-primary submit-employee">Add employee</button>
+        @if (_onSuccessfulInsertOutput.Length > 0)
+        {
+            <small class="on-insert-output form-text text-muted">@_onSuccessfulInsertOutput</small>
+        }
+    </div>
+</EditForm>
+
+@code {
+    private Employee _employee = new Employee();
+    private string _onSuccessfulInsertOutput = "";     
+
+    private async Task HandleValidSubmit()
+    {
+        Employee insertedEmployee = await SaveEmployee();
+        _onSuccessfulInsertOutput = $"Employee \"{insertedEmployee.Name}\" (with the id of \"{insertedEmployee.Id}\") was successfully saved into the database.";
+    }
+
+    private async Task<Employee> SaveEmployee()
+    {
+        try
+        {
+            return await EmployeeService.InsertEmployee(_employee);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("An error happened while trying to insert the employee");
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+}

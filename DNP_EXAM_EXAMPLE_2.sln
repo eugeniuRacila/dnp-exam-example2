@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeWebService", "EmployeeWebService\EmployeeWebService.csproj", "{30A9EE51-39D1-444F-B0EC-06B7ED6931D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeWeb", "EmployeeWeb\EmployeeWeb.csproj", "{1780207C-BF72-485B-A7DA-CF8C122E1701}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30A9EE51-39D1-444F-B0EC-06B7ED6931D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A9EE51-39D1-444F-B0EC-06B7ED6931D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A9EE51-39D1-444F-B0EC-06B7ED6931D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A9EE51-39D1-444F-B0EC-06B7ED6931D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1780207C-BF72-485B-A7DA-CF8C122E1701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1780207C-BF72-485B-A7DA-CF8C122E1701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1780207C-BF72-485B-A7DA-CF8C122E1701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1780207C-BF72-485B-A7DA-CF8C122E1701}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

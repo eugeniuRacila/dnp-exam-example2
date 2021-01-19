@@ -1,0 +1,86 @@
+﻿@page "/"
+
+@using EmployeeWeb.Entities
+@using EmployeeWeb.Services
+
+@inject IEmployeeService EmployeeService;
+
+<div class="head">
+    <div class="input-group-text" style="display: flex; flex-direction: column; align-items: flex-start">
+        <h2>Filter the listed employees:</h2>
+        <br>
+        <div class="table-radio-buttons">
+            <div style="margin-right: 24px;">
+                <label>
+                    <input type="radio" id="all" name="employee-filter" checked value="all" @onclick="@(e => FilterEmployees(null))">
+                    <span>All</span>
+                </label>
+            </div>
+            <div style="margin-right: 24px;">
+                <label>
+                    <input type="radio" id="overtime" name="employee-filter" value="overtime" @onclick="@(e => FilterEmployees(true))">
+                    <span>Overtime</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="radio" id="regular" name="employee-filter" value="regular" @onclick="@(e => FilterEmployees(false))">
+                    <span>Regular</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Worked hours</th>
+            <th scope="col">Hourly wage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in _employees)
+        {
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.Name</td>
+                <td>@(employee.HoursPerMonth > 150 ? "Overtime" : "Regular")</td>
+                <td>@employee.HoursPerMonth</td>
+                <td>@employee.HourlyWage</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<Employee> _employees = new List<Employee>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FilterEmployees(null);
+    }
+
+    private async Task<List<Employee>> FetchEmployees(bool? hasOvertime)
+    {
+        try
+        {
+            return await EmployeeService.GetEmployees(hasOvertime);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("An error happened while trying to fetch of all the employees");
+            Console.WriteLine(e);
+        }
+        
+        return new List<Employee>();
+    }
+
+    private async Task FilterEmployees(bool? hasOvertime)
+    {
+        _employees = await FetchEmployees(hasOvertime);
+    }
+}
